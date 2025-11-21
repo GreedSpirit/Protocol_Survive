@@ -19,7 +19,7 @@ public class ObjectPool : MonoBehaviour
     {
         GameObject result = null;
 
-        foreach(var p in _pools[index])
+        foreach(GameObject p in _pools[index])
         {
             if (!p.activeSelf)
             {
@@ -31,6 +31,7 @@ public class ObjectPool : MonoBehaviour
         if(result == null)
         {
             result = Instantiate(_prefabs[index], transform);
+            _pools[index].Add(result);
         }
 
         return result;

@@ -1,11 +1,23 @@
 using UnityEngine;
 
+[System.Serializable]
+public class EnemyData
+{
+    public float moveSpeed;
+    public int health;
+    public float spawnTime;
+    public int spriteIndex;
+    public int damage;
+}
+
 public class SpawnPoints : MonoBehaviour
 {
     [SerializeField] private Transform[] _spawnPoints;
+    [SerializeField] private EnemyData[] _enemyDatas;
 
-    [SerializeField] private float _spawnTimer = 1f;
     private float _curTimer;
+    private int _spawnLevel;
+
 
     void Start()
     {
@@ -15,8 +27,9 @@ public class SpawnPoints : MonoBehaviour
     void Update()
     {
         _curTimer += Time.deltaTime;
-
-        if(_curTimer >= _spawnTimer)
+        _spawnLevel = Mathf.FloorToInt(GameManager.Instance.curGameTimer / 10f); // 테스트를 위해 10초 설정
+        if(_spawnLevel >= _enemyDatas.Length - 1) _spawnLevel = _enemyDatas.Length - 1;
+        if(_curTimer >= _enemyDatas[_spawnLevel].spawnTime)
         {
             Spawn();
             _curTimer = 0;
@@ -25,7 +38,9 @@ public class SpawnPoints : MonoBehaviour
 
     private void Spawn()
     {
-        GameObject enemy = GameManager.Instance.spawner.Spawn(Random.Range(0, 4));
+        GameObject enemy = GameManager.Instance.spawner.Spawn(0);
+        enemy.GetComponent<Enemy>().Init(_enemyDatas[_spawnLevel]);
+        
         // Range를 0부터 잡을 경우 부모인 SpawnPoints도 포함되므로 1로 적어야한다.
         enemy.transform.position = _spawnPoints[Random.Range(1, _spawnPoints.Length)].transform.position;
     }

@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
 
     public Player player;
     public ObjectPool spawner;
+    public float maxGameTimer = 60f;
+    public float curGameTimer;
     private void Awake()
     {
         if (_instance != null && _instance != this)
@@ -28,6 +30,15 @@ public class GameManager : MonoBehaviour
         {            
             _instance = this;            
             DontDestroyOnLoad(this.gameObject); 
+        }
+    }
+
+    void Update()
+    {
+        curGameTimer += Time.deltaTime;
+        if(curGameTimer >= maxGameTimer)
+        {
+            curGameTimer = maxGameTimer;
         }
     }
 

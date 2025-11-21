@@ -3,16 +3,21 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private float _moveSpeed;
+    [SerializeField] private int _health;
+    [SerializeField] private int _maxHealth;
+    [SerializeField] private RuntimeAnimatorController[] _enemyRunTimeAnimator;
     [SerializeField] private Transform _targetTransform;
-    [SerializeField] private bool _isLive = true;
+    [SerializeField] private bool _isLive;
 
     private Rigidbody2D _enemyRigid;
     private SpriteRenderer _enemySpriteRenderer;
+    private Animator _enemyAnimator;
 
-    void Start()
+    void Awake()
     {
         _enemyRigid = GetComponent<Rigidbody2D>();
         _enemySpriteRenderer = GetComponent<SpriteRenderer>();
+        _enemyAnimator = GetComponent<Animator>();
     }
 
     void FixedUpdate()
@@ -32,5 +37,15 @@ public class Enemy : MonoBehaviour
     void OnEnable()
     {
         _targetTransform = GameManager.Instance.player.transform;
+        _isLive = true;
+        _health = _maxHealth;
+    }
+
+    public void Init(EnemyData data)
+    {
+        _enemyAnimator.runtimeAnimatorController = _enemyRunTimeAnimator[data.spriteIndex];        
+        _moveSpeed = data.moveSpeed;
+        _maxHealth = data.health;
+        _health = _maxHealth;
     }
 }

@@ -19068,6 +19068,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   player: {fileID: 1332385274}
   spawner: {fileID: 1775819823}
+  maxGameTimer: 60
+  curGameTimer: 0
 --- !u!4 &647894331
 Transform:
   m_ObjectHideFlags: 0
@@ -38620,10 +38622,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObjectPool
   _prefabs:
-  - {fileID: 5115714969359776771, guid: bc081b6833047294f8fc279a25cc031b, type: 3}
-  - {fileID: 173350064621551394, guid: 5271befee2bf20341bd789b868071229, type: 3}
-  - {fileID: 5581814558476888145, guid: e725d108174449b43a3d140c79a63cfc, type: 3}
-  - {fileID: 7370820169838652676, guid: 475f48899c6c647488301ebd6417970e, type: 3}
+  - {fileID: 5115714969359776771, guid: 09c73a8689919d542884128e20a31e81, type: 3}
 --- !u!1 &1832764195
 GameObject:
   m_ObjectHideFlags: 0
@@ -38829,7 +38828,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpawnPoints
   _spawnPoints: []
-  _spawnTimer: 1
+  _enemyDatas:
+  - moveSpeed: 3
+    health: 5
+    spawnTime: 0.7
+    spriteIndex: 0
+    damage: 1
+  - moveSpeed: 1
+    health: 20
+    spawnTime: 1
+    spriteIndex: 1
+    damage: 3
+  - moveSpeed: 5
+    health: 15
+    spawnTime: 0.5
+    spriteIndex: 2
+    damage: 2
+  - moveSpeed: 3
+    health: 30
+    spawnTime: 2
+    spriteIndex: 3
+    damage: 5
+  _spawnTimer:
+  - 1
+  - 0.7
+  - 1
+  - 0.5
 --- !u!1 &2044503079
 GameObject:
   m_ObjectHideFlags: 0
