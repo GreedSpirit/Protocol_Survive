@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     }
 
     public Player player;
-    
+    public ObjectPool spawner;
     private void Awake()
     {
         if (_instance != null && _instance != this)

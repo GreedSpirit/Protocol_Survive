@@ -4,7 +4,7 @@ using Random = UnityEngine.Random;
 
 public class RePosition : MonoBehaviour
 {
-    public float baseBackGroundScale = 20;
+    public float baseBackGroundScale = 30;
     private Collider2D _collider;
 
     void Start()

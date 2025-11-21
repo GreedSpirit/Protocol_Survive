@@ -18,7 +18,7 @@ public class Enemy : MonoBehaviour
     void FixedUpdate()
     {
         if(!_isLive) return;
-        
+
         Vector2 dirVec = _targetTransform.position - transform.position;
         Vector2 moveVec = Time.fixedDeltaTime * _moveSpeed * dirVec.normalized;
         _enemyRigid.MovePosition(new Vector2(transform.position.x, transform.position.y) + moveVec);
@@ -27,5 +27,10 @@ public class Enemy : MonoBehaviour
         {
             _enemySpriteRenderer.flipX = dirVec.x < 0 ? true : false; //스프라이트 좌 우 변경
         }
+    }
+
+    void OnEnable()
+    {
+        _targetTransform = GameManager.Instance.player.transform;
     }
 }
