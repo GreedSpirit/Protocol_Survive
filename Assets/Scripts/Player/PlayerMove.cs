@@ -20,7 +20,7 @@ public class PlayerMove : MonoBehaviour
     void FixedUpdate()
     {
         Vector2 dirVec = Time.deltaTime * _moveSpeed * _moveInput;
-        _playerRigid.MovePosition(_playerRigid.position + dirVec);
+        _playerRigid.MovePosition(new Vector2(transform.position.x, transform.position.y) + dirVec);
 
         if(dirVec.x != 0)
         {
