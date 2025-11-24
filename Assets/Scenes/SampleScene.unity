@@ -28725,7 +28725,7 @@ GameObject:
   - component: {fileID: 1223470858}
   - component: {fileID: 1223470859}
   m_Layer: 0
-  m_Name: Weapon
+  m_Name: MeleeWeapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28761,8 +28761,8 @@ MonoBehaviour:
   weaponIndex: 0
   prefabIndex: 1
   speed: 100
-  damage: 5
-  count: 3
+  damage: 10
+  count: 1
 --- !u!1 &1261438200
 GameObject:
   m_ObjectHideFlags: 0
@@ -28840,6 +28840,7 @@ GameObject:
   - component: {fileID: 1332385268}
   - component: {fileID: 1332385273}
   - component: {fileID: 1332385274}
+  - component: {fileID: 1332385275}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -29007,6 +29008,7 @@ Transform:
   - {fileID: 711177751}
   - {fileID: 2017166812}
   - {fileID: 1223470858}
+  - {fileID: 2036520106}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1332385273
@@ -29140,6 +29142,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMove
   _moveSpeed: 5
+--- !u!114 &1332385275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1332385267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2be7a00fee855a4090be468471a469f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RayCastScan
+  _circleRadius: 10
+  _enemyLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  target: {fileID: 0}
 --- !u!1 &1543111768
 GameObject:
   m_ObjectHideFlags: 0
@@ -38674,6 +38693,7 @@ MonoBehaviour:
   _prefabs:
   - {fileID: 5115714969359776771, guid: 09c73a8689919d542884128e20a31e81, type: 3}
   - {fileID: 1913982297207969553, guid: ea78fa3657bb5444da2e53deb4b30ce4, type: 3}
+  - {fileID: 8346144429716928427, guid: 8e838ed4d87774f47ade2189800d3108, type: 3}
 --- !u!1 &1832764195
 GameObject:
   m_ObjectHideFlags: 0
@@ -38900,6 +38920,55 @@ MonoBehaviour:
     spawnTime: 2
     spriteIndex: 3
     damage: 5
+--- !u!1 &2036520105
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2036520106}
+  - component: {fileID: 2036520107}
+  m_Layer: 0
+  m_Name: RangeWeapon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2036520106
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2036520105}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1332385272}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2036520107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2036520105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4aa157557f53044c953e706be28231f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Weapon
+  weaponIndex: 1
+  prefabIndex: 2
+  speed: 100
+  damage: 5
+  count: 1
 --- !u!1 &2044503079
 GameObject:
   m_ObjectHideFlags: 0
