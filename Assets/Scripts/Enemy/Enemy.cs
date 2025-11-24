@@ -8,7 +8,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private RuntimeAnimatorController[] _enemyRunTimeAnimator;
     [SerializeField] private Transform _targetTransform;
     [SerializeField] private bool _isLive;
-
+    
     private Rigidbody2D _enemyRigid;
     private SpriteRenderer _enemySpriteRenderer;
     private Animator _enemyAnimator;
@@ -47,5 +47,22 @@ public class Enemy : MonoBehaviour
         _moveSpeed = data.moveSpeed;
         _maxHealth = data.health;
         _health = _maxHealth;
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Attack"))
+        {
+            _health -= collision.GetComponent<Attack>()._damage;
+
+            if(_health > 0) // Live
+            {
+                
+            }
+            else // Die
+            {
+                gameObject.SetActive(false);
+            }
+        }
     }
 }

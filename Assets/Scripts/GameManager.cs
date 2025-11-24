@@ -3,7 +3,6 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     private static GameManager _instance;
-
     public static GameManager Instance //기본적인 싱글톤 구조 (해당 프로젝트에서는 단일 장면으로 이루어지기에 필수적이지 않지만 연습을 위해 구현)
     {
         get

@@ -17,6 +17,11 @@ public class Player : MonoBehaviour
         _playerAnimator = GetComponent<Animator>();
     }
 
+    void Start()
+    {
+        GameManager.Instance.player = this;
+    }
+
     void FixedUpdate()
     {
         Vector2 dirVec = Time.deltaTime * _moveSpeed * _moveInput;

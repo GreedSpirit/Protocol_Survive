@@ -13,7 +13,10 @@ public class ObjectPool : MonoBehaviour
         {
             _pools[i] = new List<GameObject>();
         }
+        GameManager.Instance.spawner = this;
     }
+
+    
 
     public GameObject Spawn(int index)
     {
