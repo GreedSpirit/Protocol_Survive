@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Attack : MonoBehaviour
 {
-    [SerializeField] public int _damage;
+    [SerializeField] public float _damage;
     [SerializeField] private int _penetration; //penetration = 관통
 
     private Rigidbody2D _rigidbody;
@@ -11,7 +11,7 @@ public class Attack : MonoBehaviour
     {
         _rigidbody = GetComponent<Rigidbody2D>(); // 근접공격은 갖고 있지 않음
     }
-    public void Init(int damage, int penetration, Vector3 dir)
+    public void Init(float damage, int penetration, Vector3 dir)
     {
         _damage = damage;
         _penetration = penetration;

@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] private float _baseMoveSpeed = 5f;
     [SerializeField] private float _moveSpeed = 5f;
     private Vector2 _moveInput;
     private Rigidbody2D _playerRigid;
@@ -15,6 +16,7 @@ public class Player : MonoBehaviour
         _playerRigid = GetComponent<Rigidbody2D>();
         _playerSpriteRenderer = GetComponent<SpriteRenderer>();
         _playerAnimator = GetComponent<Animator>();
+        _moveSpeed = _baseMoveSpeed;
     }
 
     void Start()
@@ -37,5 +39,10 @@ public class Player : MonoBehaviour
     public void OnMove(InputAction.CallbackContext ctx)
     {
         _moveInput = ctx.ReadValue<Vector2>();
+    }
+
+    public void SetMoveSpeed(float rate)
+    {
+        _moveSpeed = _baseMoveSpeed + _baseMoveSpeed * rate;
     }
 }

@@ -5,8 +5,8 @@ public class Enemy : MonoBehaviour
 {
     [Header("Enemy Status")]
     [SerializeField] private float _moveSpeed;
-    [SerializeField] private int _health;
-    [SerializeField] private int _maxHealth;
+    [SerializeField] private float _health;
+    [SerializeField] private float _maxHealth;
     [SerializeField] private RuntimeAnimatorController[] _enemyRunTimeAnimator;
     [SerializeField] private Transform _targetTransform;
     [SerializeField] private bool _isLive;

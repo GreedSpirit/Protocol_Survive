@@ -11,7 +11,7 @@ public class UIView : MonoBehaviour
 
     [SerializeField] private RectTransform _healthRectTransform;
 
-    void FixedUpdate()
+    void LateUpdate()
     {
         _healthRectTransform.position = Camera.main.WorldToScreenPoint
         (

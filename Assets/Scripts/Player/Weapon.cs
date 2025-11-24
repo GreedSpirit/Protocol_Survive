@@ -6,7 +6,7 @@ public class Weapon : MonoBehaviour
     public int weaponIndex; // 0 = Melee 1 = Range
     public int prefabIndex; // Spawner의 인스펙터에 할당된 프리팹 인덱스
     public float speed; // 근접은 회전 속도, 원거리는 연사 속도
-    public int damage;
+    public float damage;
     public int count; // 근접은 실제 구현 갯수, 원거리는 관통 수
 
     private float _curTimer;
@@ -14,12 +14,12 @@ public class Weapon : MonoBehaviour
 
     void Awake()
     {
-        _player = GetComponentInParent<Player>();
+        _player = GameManager.Instance.player;
     }
 
     void Start()
     {
-        Init();
+        //Init();
     }
 
     void Update()
@@ -48,8 +48,20 @@ public class Weapon : MonoBehaviour
         }
     }
 
-    void Init()
+    public void Init(ItemData itemData)
     {
+        transform.parent = _player.transform;
+        transform.localPosition = Vector3.zero;
+        name = itemData.itemName;
+
+        weaponIndex = itemData.id;
+        damage = itemData.baseDamage;
+        count = itemData.baseCount;
+        prefabIndex = weaponIndex + 1;
+
+        
+
+
         switch (weaponIndex)
         {
             case 0: //근접 무기 초기화 장소
@@ -61,6 +73,8 @@ public class Weapon : MonoBehaviour
             default:
                 break;
         }
+
+        _player.BroadcastMessage("ApplyUpgrade", SendMessageOptions.DontRequireReceiver);
     }
 
     void PlaceMeleeAttack()
@@ -91,18 +105,20 @@ public class Weapon : MonoBehaviour
         }
     }
 
-    void Upgrade(int damage, int count)
+    public void Upgrade(float damage, int count)
     {
+        this.damage = damage;
+        this.count += count;
         switch (weaponIndex)
         {
-            case 0: //근접 무기 업그레이드 장소
-                this.damage = damage;
-                this.count += count;
+            case 0: //근접 무기 재배치
                 PlaceMeleeAttack();
                 break;
             default:
                 break;
         }
+
+        _player.BroadcastMessage("ApplyUpgrade", SendMessageOptions.DontRequireReceiver);
     }
 
     void Fire()

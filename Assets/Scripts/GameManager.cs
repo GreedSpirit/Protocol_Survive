@@ -77,6 +77,7 @@ public class GameManager : MonoBehaviour
         {
             curExp = 0;
             curLevel++;
+            if(curLevel >= nextExp.Length) curLevel = nextExp.Length - 1;
         }
 
         OnExpChanged?.Invoke(curExp, nextExp[curLevel]);
