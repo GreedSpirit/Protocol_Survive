@@ -38967,7 +38967,7 @@ MonoBehaviour:
   weaponIndex: 1
   prefabIndex: 2
   speed: 100
-  damage: 5
+  damage: 1
   count: 1
 --- !u!1 &2044503079
 GameObject:

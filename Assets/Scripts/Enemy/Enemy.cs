@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -12,21 +13,25 @@ public class Enemy : MonoBehaviour
     private Rigidbody2D _enemyRigid;
     private SpriteRenderer _enemySpriteRenderer;
     private Animator _enemyAnimator;
+    private Collider2D _enemyCollider;
 
     void Awake()
     {
         _enemyRigid = GetComponent<Rigidbody2D>();
         _enemySpriteRenderer = GetComponent<SpriteRenderer>();
         _enemyAnimator = GetComponent<Animator>();
+        _enemyCollider = GetComponent<Collider2D>();
     }
 
     void FixedUpdate()
     {
-        if(!_isLive) return;
+        if(!_isLive || _enemyAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Hit")) 
+            return;
 
         Vector2 dirVec = _targetTransform.position - transform.position;
         Vector2 moveVec = Time.fixedDeltaTime * _moveSpeed * dirVec.normalized;
         _enemyRigid.MovePosition(new Vector2(transform.position.x, transform.position.y) + moveVec);
+        _enemyRigid.linearVelocity = Vector2.zero;
 
         if(dirVec.x != 0)
         {
@@ -39,6 +44,10 @@ public class Enemy : MonoBehaviour
         _targetTransform = GameManager.Instance.player.transform;
         _isLive = true;
         _health = _maxHealth;
+
+        _enemyRigid.simulated = true;
+        _enemyCollider.enabled = true;
+        _enemyAnimator.SetBool("Death", !_isLive);
     }
 
     public void Init(EnemyData data)
@@ -57,12 +66,33 @@ public class Enemy : MonoBehaviour
 
             if(_health > 0) // Live
             {
+                StartCoroutine(KnockBack());
+                _enemyAnimator.SetTrigger("Hit");
                 
             }
             else // Die
             {
-                gameObject.SetActive(false);
+                _isLive = false;
+                _enemyRigid.simulated = false;
+                _enemyCollider.enabled = false;
+
+                _enemyAnimator.SetBool("Death", !_isLive);
+                Invoke("Death", 2f);
             }
         }
+    }
+    
+    IEnumerator KnockBack()
+    {
+        Vector3 playerPos = GameManager.Instance.player.transform.position;
+        Vector3 dirVec = transform.position - playerPos;
+        dirVec = dirVec.normalized;
+        _enemyRigid.AddForce(dirVec * 2, ForceMode2D.Impulse);
+        yield return new WaitForSeconds(1.2f);
+    }
+
+    void Death()
+    {
+        gameObject.SetActive(false);
     }
 }
