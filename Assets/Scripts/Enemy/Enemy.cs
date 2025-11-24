@@ -3,17 +3,22 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    [Header("Enemy Status")]
     [SerializeField] private float _moveSpeed;
     [SerializeField] private int _health;
     [SerializeField] private int _maxHealth;
     [SerializeField] private RuntimeAnimatorController[] _enemyRunTimeAnimator;
     [SerializeField] private Transform _targetTransform;
     [SerializeField] private bool _isLive;
+
+    [Header("Controller")]
+    [SerializeField] private UIController _uiController;
     
     private Rigidbody2D _enemyRigid;
     private SpriteRenderer _enemySpriteRenderer;
     private Animator _enemyAnimator;
     private Collider2D _enemyCollider;
+    private WaitForSeconds _waitTime;
 
     void Awake()
     {
@@ -21,6 +26,8 @@ public class Enemy : MonoBehaviour
         _enemySpriteRenderer = GetComponent<SpriteRenderer>();
         _enemyAnimator = GetComponent<Animator>();
         _enemyCollider = GetComponent<Collider2D>();
+        _waitTime = new WaitForSeconds(1.2f);
+        _uiController = FindFirstObjectByType<UIController>();
     }
 
     void FixedUpdate()
@@ -60,6 +67,10 @@ public class Enemy : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
+        if (!_isLive)
+        {
+            return;
+        }
         if (collision.CompareTag("Attack"))
         {
             _health -= collision.GetComponent<Attack>()._damage;
@@ -77,6 +88,8 @@ public class Enemy : MonoBehaviour
                 _enemyCollider.enabled = false;
 
                 _enemyAnimator.SetBool("Death", !_isLive);
+                _uiController.ExpChanged();
+                _uiController.KillCountChanged();
                 Invoke("Death", 2f);
             }
         }
@@ -88,7 +101,7 @@ public class Enemy : MonoBehaviour
         Vector3 dirVec = transform.position - playerPos;
         dirVec = dirVec.normalized;
         _enemyRigid.AddForce(dirVec * 2, ForceMode2D.Impulse);
-        yield return new WaitForSeconds(1.2f);
+        yield return _waitTime;
     }
 
     void Death()
