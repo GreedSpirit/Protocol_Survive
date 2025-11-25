@@ -12,17 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c29d648e6c235a449f1d929d797a048, type: 3}
   m_Name: RangeAttack
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  icon: {fileID: 21300000, guid: 4d79ef79b5a264cfd9b4195c5a9760d9, type: 3}
   itemType: 1
   id: 1
   itemName: Laser Gun
-  desc: Range Attack
+  desc: 'Base Damage + {0}%
+
+    Base Penetration + {1}'
   baseDamage: 2
   damages:
+  - 0
   - 0.5
   - 1
-  - 1.5
   - 2
   - 3
   baseCount: 0
-  counts: 0100000002000000030000000400000005000000
+  counts: 0000000001000000010000000200000005000000
   attackPrefab: {fileID: 8346144429716928427, guid: 8e838ed4d87774f47ade2189800d3108, type: 3}

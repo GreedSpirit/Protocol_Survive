@@ -32,6 +32,10 @@ public class Enemy : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (!GameManager.Instance.isLive)
+        {
+            return;
+        }
         if(!_isLive || _enemyAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Hit")) 
             return;
 

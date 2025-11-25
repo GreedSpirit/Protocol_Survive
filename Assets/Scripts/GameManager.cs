@@ -30,11 +30,13 @@ public class GameManager : MonoBehaviour
     [Header("About Game State")]
     public float maxGameTimer = 60f;
     public float curGameTimer;
+    public bool isLive;
 
     public event Action<int, int> OnExpChanged;
     public event Action<float> OnTimerChanged;
     public event Action<int> OnKillCountChanged;
     public event Action<int, int> OnHealthChanged;
+    public event Action OnLevelChanged;
 
     private void Awake()
     {
@@ -60,6 +62,9 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        if(!isLive)
+            return;
+            
         curGameTimer += Time.deltaTime;
         if(curGameTimer >= maxGameTimer)
         {
@@ -77,7 +82,10 @@ public class GameManager : MonoBehaviour
         {
             curExp = 0;
             curLevel++;
-            if(curLevel >= nextExp.Length) curLevel = nextExp.Length - 1;
+            OnLevelChanged?.Invoke();
+            TimeStop();
+            if(curLevel >= nextExp.Length) 
+                curLevel = nextExp.Length - 1;
         }
 
         OnExpChanged?.Invoke(curExp, nextExp[curLevel]);
@@ -93,6 +101,23 @@ public class GameManager : MonoBehaviour
     public void HealthChanged()
     {
         OnHealthChanged?.Invoke(playerHealth, playerMaxHealth);
+    }
+
+    public void LevelChanged()
+    {
+        OnLevelChanged?.Invoke();
+    }
+
+    public void TimeStop()
+    {
+        isLive = false;
+        Time.timeScale = 0;
+    }
+
+    public void TimeResume()
+    {
+        isLive = true;
+        Time.timeScale = 1;
     }
 
 }

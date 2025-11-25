@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c29d648e6c235a449f1d929d797a048, type: 3}
   m_Name: AS
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  icon: {fileID: 21300000, guid: 2a09c3dbb37094c158b67694c29c5f9b, type: 3}
   itemType: 2
   id: 2
   itemName: Attack Speed
-  desc: Increase Attack Speed
+  desc: Increase Attack Speed {0}%
   baseDamage: 0
   damages:
   - 0.1

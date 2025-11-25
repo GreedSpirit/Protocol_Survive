@@ -12,10 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c29d648e6c235a449f1d929d797a048, type: 3}
   m_Name: MeleeAttack
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  icon: {fileID: 21300000, guid: 6ce7d758dac494cc393bd4437dfdb24e, type: 3}
   itemType: 0
   id: 0
   itemName: Laser Sword
-  desc: Melee Attack
+  desc: 'Base Damage + {0}%
+
+    Previous Count + {1}'
   baseDamage: 5
   damages:
   - 0
@@ -24,5 +27,5 @@ MonoBehaviour:
   - 2
   - 3
   baseCount: 1
-  counts: 0100000000000000020000000000000003000000
+  counts: 0000000001000000010000000200000003000000
   attackPrefab: {fileID: 1913982297207969553, guid: ea78fa3657bb5444da2e53deb4b30ce4, type: 3}

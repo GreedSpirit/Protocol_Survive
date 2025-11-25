@@ -26,6 +26,10 @@ public class SpawnPoints : MonoBehaviour
 
     void Update()
     {
+        if (!GameManager.Instance.isLive)
+        {
+            return;
+        }
         _curTimer += Time.deltaTime;
         _spawnLevel = Mathf.FloorToInt(GameManager.Instance.curGameTimer / 10f); // 테스트를 위해 10초 설정
         if(_spawnLevel >= _enemyDatas.Length - 1) _spawnLevel = _enemyDatas.Length - 1;

@@ -26,6 +26,10 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (!GameManager.Instance.isLive)
+        {
+            return;
+        }
         Vector2 dirVec = Time.deltaTime * _moveSpeed * _moveInput;
         _playerRigid.MovePosition(new Vector2(transform.position.x, transform.position.y) + dirVec);
 

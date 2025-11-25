@@ -24,6 +24,11 @@ public class Weapon : MonoBehaviour
 
     void Update()
     {
+        if (!GameManager.Instance.isLive)
+        {
+            return;
+        }
+        
         switch (weaponIndex)
         {
             case 0: //근접 무기 작동 장소

@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c29d648e6c235a449f1d929d797a048, type: 3}
   m_Name: Heal
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  icon: {fileID: 21300000, guid: 0f481441a9c9d4ac791aa3786c80514b, type: 3}
   itemType: 4
   id: 4
   itemName: Heal
-  desc: Restore Health
+  desc: Restore Health 10
   baseDamage: 0
   damages:
   - 0

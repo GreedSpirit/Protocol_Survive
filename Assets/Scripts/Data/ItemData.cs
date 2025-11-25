@@ -6,9 +6,11 @@ public class ItemData : ScriptableObject
     public enum ItemType {Melee, Range, AS, MS, Heal}
 
     [Header("Base Infomation")]
+    public Sprite icon;
     public ItemType itemType;
     public int id;
     public string itemName;
+    [TextArea]
     public string desc;
 
     [Header("Upgrade Data")]

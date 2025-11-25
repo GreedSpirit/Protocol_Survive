@@ -9,6 +9,7 @@ public class UIController : MonoBehaviour
         GameManager.Instance.OnKillCountChanged += uiView.UpdateKillUI;
         GameManager.Instance.OnTimerChanged += uiView.UpdateTimerUI;
         GameManager.Instance.OnHealthChanged += uiView.UpdateHealthUI;
+        GameManager.Instance.OnLevelChanged += uiView.UpdateLevelUpUI;
     }
 
     public void ExpChanged()
@@ -24,6 +25,11 @@ public class UIController : MonoBehaviour
     public void HealthChanged()
     {
         GameManager.Instance.HealthChanged();
+    }
+
+    public void LevelChanged()
+    {
+        GameManager.Instance.LevelChanged();
     }
 
     
