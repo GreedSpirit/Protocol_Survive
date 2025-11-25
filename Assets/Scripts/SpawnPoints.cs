@@ -17,11 +17,13 @@ public class SpawnPoints : MonoBehaviour
 
     private float _curTimer;
     private int _spawnLevel;
+    private float _divideLevel;
 
 
     void Start()
     {
         _spawnPoints = GetComponentsInChildren<Transform>();
+        _divideLevel = GameManager.Instance.maxGameTimer / _enemyDatas.Length;
     }
 
     void Update()
@@ -31,7 +33,7 @@ public class SpawnPoints : MonoBehaviour
             return;
         }
         _curTimer += Time.deltaTime;
-        _spawnLevel = Mathf.FloorToInt(GameManager.Instance.curGameTimer / 10f); // 테스트를 위해 10초 설정
+        _spawnLevel = Mathf.FloorToInt(GameManager.Instance.curGameTimer / _divideLevel);
         if(_spawnLevel >= _enemyDatas.Length - 1) _spawnLevel = _enemyDatas.Length - 1;
         if(_curTimer >= _enemyDatas[_spawnLevel].spawnTime)
         {

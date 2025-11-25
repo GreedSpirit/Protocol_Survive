@@ -9,6 +9,8 @@ public class Player : MonoBehaviour
     private Rigidbody2D _playerRigid;
     private SpriteRenderer _playerSpriteRenderer;
     private Animator _playerAnimator;
+    private UIController _uiController;
+    private bool _isLive = true;
 
 
     void Awake()
@@ -17,6 +19,7 @@ public class Player : MonoBehaviour
         _playerSpriteRenderer = GetComponent<SpriteRenderer>();
         _playerAnimator = GetComponent<Animator>();
         _moveSpeed = _baseMoveSpeed;
+        _uiController = FindFirstObjectByType<UIController>();
     }
 
     void Start()
@@ -48,5 +51,29 @@ public class Player : MonoBehaviour
     public void SetMoveSpeed(float rate)
     {
         _moveSpeed = _baseMoveSpeed + _baseMoveSpeed * rate;
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (!GameManager.Instance.isLive)
+        {
+            return;
+        }
+
+        GameManager.Instance.playerHealth -= 10;
+        _uiController.HealthChanged();
+
+
+        if(GameManager.Instance.playerHealth < 0 && _isLive)
+        {
+            for(int idx = 2; idx < transform.childCount; idx++)
+            {
+                transform.GetChild(idx).gameObject.SetActive(false);
+            }
+
+            _playerAnimator.SetTrigger("Death");
+            GameManager.Instance.GameOver();
+        }
+
     }
 }

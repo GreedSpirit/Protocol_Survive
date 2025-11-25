@@ -13,6 +13,7 @@ public class UIView : MonoBehaviour
 
     [SerializeField] private RectTransform _healthRectTransform;
     [SerializeField] private RectTransform _levelUpRectTransform;
+    [SerializeField] private GameObject _gameOverUI;
 
     private UpgradeItem[] _items;
 
@@ -99,5 +100,10 @@ public class UIView : MonoBehaviour
         }
 
         return uniqueNumbers.ToArray();
+    }
+
+    public void UpdateGameOverUI()
+    {
+        _gameOverUI.SetActive(true);
     }
 }

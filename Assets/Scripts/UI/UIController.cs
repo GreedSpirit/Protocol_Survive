@@ -10,6 +10,7 @@ public class UIController : MonoBehaviour
         GameManager.Instance.OnTimerChanged += uiView.UpdateTimerUI;
         GameManager.Instance.OnHealthChanged += uiView.UpdateHealthUI;
         GameManager.Instance.OnLevelChanged += uiView.UpdateLevelUpUI;
+        GameManager.Instance.OnGameOverChanged += uiView.UpdateGameOverUI;
     }
 
     public void ExpChanged()

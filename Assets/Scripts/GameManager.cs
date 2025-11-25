@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -26,6 +28,7 @@ public class GameManager : MonoBehaviour
 
     [Header("About Object Pool")]
     public ObjectPool spawner;
+    public GameObject clear;
     
     [Header("About Game State")]
     public float maxGameTimer = 60f;
@@ -37,6 +40,7 @@ public class GameManager : MonoBehaviour
     public event Action<int> OnKillCountChanged;
     public event Action<int, int> OnHealthChanged;
     public event Action OnLevelChanged;
+    public event Action OnGameOverChanged;
 
     private void Awake()
     {
@@ -47,12 +51,29 @@ public class GameManager : MonoBehaviour
         else
         {            
             _instance = this;            
-            DontDestroyOnLoad(this.gameObject); 
+            //DontDestroyOnLoad(this.gameObject); 
         }
     }
 
-    void Start()
+    public void GameStart()
     {
+        OnExpChanged?.Invoke(curExp, nextExp[curLevel]);
+        OnKillCountChanged?.Invoke(killCount);
+        OnTimerChanged?.Invoke(maxGameTimer - curGameTimer);
+        playerHealth = playerMaxHealth;
+        OnHealthChanged?.Invoke(playerHealth, playerMaxHealth);
+
+        TimeResume();
+    }
+
+    void Init()
+    {
+        playerHealth = playerMaxHealth;
+        curExp = 0;
+        killCount = 0;
+        curGameTimer = 0;
+        curLevel = 0;
+
         OnExpChanged?.Invoke(curExp, nextExp[curLevel]);
         OnKillCountChanged?.Invoke(killCount);
         OnTimerChanged?.Invoke(maxGameTimer - curGameTimer);
@@ -60,15 +81,51 @@ public class GameManager : MonoBehaviour
         OnHealthChanged?.Invoke(playerHealth, playerMaxHealth);
     }
 
+    public void GameReStart()
+    {
+        Init();
+        SceneManager.LoadScene(0);
+    }
+
+    public void GameOver()
+    {
+        StartCoroutine(GameOverCoroutine());
+    }
+
+    IEnumerator GameOverCoroutine()
+    {
+        isLive = false;
+        yield return new WaitForSeconds(1.2f);
+        OnGameOverChanged?.Invoke();
+        TimeStop();
+    }
+
+    public void GameVictory()
+    {
+        StartCoroutine(GameVictoryCoroutine());
+    }
+
+    IEnumerator GameVictoryCoroutine()
+    {
+        isLive = false;
+        clear.SetActive(true);
+
+        yield return new WaitForSeconds(0.7f);
+
+        OnGameOverChanged?.Invoke();
+        TimeStop();
+    }
+
     void Update()
     {
         if(!isLive)
             return;
-            
+
         curGameTimer += Time.deltaTime;
         if(curGameTimer >= maxGameTimer)
         {
             curGameTimer = maxGameTimer;
+            GameVictory();
         }
 
         OnTimerChanged?.Invoke(maxGameTimer - curGameTimer);
@@ -76,6 +133,9 @@ public class GameManager : MonoBehaviour
 
     public void ExpChanged() // 모델
     {
+        if(!isLive)
+            return;
+
         curExp++;
 
         if(curExp >= nextExp[curLevel])
