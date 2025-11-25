@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     public int curExp;
     public int killCount;
     public int[] nextExp;
+    public int characterSelectIndex;
 
     [Header("About Object Pool")]
     public ObjectPool spawner;
@@ -32,7 +33,7 @@ public class GameManager : MonoBehaviour
     
     [Header("About Game State")]
     public float maxGameTimer = 60f;
-    public float curGameTimer;
+    public float curGameTimer = 0;
     public bool isLive;
 
     public event Action<int, int> OnExpChanged;
@@ -41,6 +42,9 @@ public class GameManager : MonoBehaviour
     public event Action<int, int> OnHealthChanged;
     public event Action OnLevelChanged;
     public event Action OnGameOverChanged;
+
+    [SerializeField] private RectTransform _levelUpRectTransform;
+    private UpgradeItem[] _items;
 
     private void Awake()
     {
@@ -55,12 +59,26 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void GameStart()
+    void Start()
     {
+        _items = _levelUpRectTransform.GetComponentsInChildren<UpgradeItem>(true); //true를 함으로써 비활성화상태인 자식도 갖고옴
+    }
+
+    void BaseWeapon(int idx)
+    {
+        _items[idx].OnClick();
+    }
+
+    public void GameStart(int idx)
+    {
+        characterSelectIndex = idx;
+        playerHealth = playerMaxHealth;
+        player.gameObject.SetActive(true);
+        BaseWeapon(idx % 2); // 현재 무기가 2종류 이기 때문에 2
+
         OnExpChanged?.Invoke(curExp, nextExp[curLevel]);
         OnKillCountChanged?.Invoke(killCount);
         OnTimerChanged?.Invoke(maxGameTimer - curGameTimer);
-        playerHealth = playerMaxHealth;
         OnHealthChanged?.Invoke(playerHealth, playerMaxHealth);
 
         TimeResume();

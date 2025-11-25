@@ -5,6 +5,7 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private float _baseMoveSpeed = 5f;
     [SerializeField] private float _moveSpeed = 5f;
+    [SerializeField] private RuntimeAnimatorController[] _playerRuntimeAnimControllers;
     private Vector2 _moveInput;
     private Rigidbody2D _playerRigid;
     private SpriteRenderer _playerSpriteRenderer;
@@ -75,5 +76,10 @@ public class Player : MonoBehaviour
             GameManager.Instance.GameOver();
         }
 
+    }
+
+    void OnEnable()
+    {
+        _playerAnimator.runtimeAnimatorController = _playerRuntimeAnimControllers[GameManager.Instance.characterSelectIndex];
     }
 }

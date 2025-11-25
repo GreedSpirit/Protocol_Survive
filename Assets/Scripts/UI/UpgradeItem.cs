@@ -101,7 +101,9 @@ public class UpgradeItem : MonoBehaviour
             GetComponent<Button>().interactable = false;
         }
         
-        _uiController.LevelChanged();
+        if(GameManager.Instance.curGameTimer != 0)
+            _uiController.LevelChanged();
+            
         GameManager.Instance.TimeResume();
     }
 
