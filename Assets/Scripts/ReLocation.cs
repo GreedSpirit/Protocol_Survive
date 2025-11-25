@@ -15,6 +15,10 @@ public class ReLocation : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("DetectGround"))
         {
+            if(GameManager.Instance == null || GameManager.Instance.player == null)
+            {
+                return;
+            }
             Vector2 playerPosition = GameManager.Instance.player.transform.position;
             float dirX = playerPosition.x - transform.position.x;
             float dirY = playerPosition.y - transform.position.y;
