@@ -71,6 +71,7 @@ public class Player : MonoBehaviour
             {
                 GameManager.Instance.playerHealth -= collision.gameObject.GetComponent<Enemy>().damage;
                 _uiController.HealthChanged();
+                StartCoroutine(DamageEffect());
 
                 _lastDamageTime = Time.time;
 
@@ -83,10 +84,6 @@ public class Player : MonoBehaviour
 
                     _playerAnimator.SetTrigger("Death");
                     GameManager.Instance.GameOver();
-                }
-                else
-                {
-                    StartCoroutine(DamageEffect());
                 }
             }
         }
@@ -101,7 +98,7 @@ public class Player : MonoBehaviour
     IEnumerator DamageEffect()
     {
         GetComponent<SpriteRenderer>().color = Color.red;
-        yield return new WaitForSeconds(_damageCooldown);
+        yield return new WaitForSeconds(0.2f);
         GetComponent<SpriteRenderer>().color = Color.white;
     }
 }

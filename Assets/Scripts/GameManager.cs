@@ -222,4 +222,13 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1;
     }
 
+    public void OnClickExitGame()
+    {
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+        #else
+            Application.Quit();
+        #endif
+    }
+
 }

@@ -85,11 +85,12 @@ public class UpgradeItem : MonoBehaviour
                 }
                 break;
             case ItemData.ItemType.Heal:
-                GameManager.Instance.playerHealth += 10;
+                GameManager.Instance.playerHealth += 20;
                 if(GameManager.Instance.playerHealth >= GameManager.Instance.playerMaxHealth)
                 {
                     GameManager.Instance.playerHealth = GameManager.Instance.playerMaxHealth;
                 }
+                _uiController.HealthChanged();
                 break;
             default:
                 break;

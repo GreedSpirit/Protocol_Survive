@@ -16,7 +16,7 @@ MonoBehaviour:
   itemType: 4
   id: 4
   itemName: Heal
-  desc: Restore Health 10
+  desc: Restore Health 20
   baseDamage: 0
   damages:
   - 0
