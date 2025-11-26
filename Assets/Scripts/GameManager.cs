@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour
         else
         {            
             _instance = this;            
-            //DontDestroyOnLoad(this.gameObject);
+            DontDestroyOnLoad(this.gameObject);
         }
     }
 
@@ -122,11 +122,11 @@ public class GameManager : MonoBehaviour
 
     public void GameVictory()
     {
-        SaveManager.Instance.achiveData.isGameCleared = true;
+        SaveManager.Instance.achieveData.isGameCleared = true;
 
-        if (SaveManager.Instance.achiveData.isCharacterUnlocked[3] == false)
+        if (SaveManager.Instance.achieveData.isCharacterUnlocked[3] == false)
         {
-            SaveManager.Instance.achiveData.isCharacterUnlocked[3] = true;
+            SaveManager.Instance.achieveData.isCharacterUnlocked[3] = true;
             Debug.Log("4char achive");
 
             SaveManager.Instance.SaveGame();
@@ -184,14 +184,13 @@ public class GameManager : MonoBehaviour
     public void KillChanged()
     {
         killCount++;
-        SaveManager.Instance.achiveData.totalKillCount++;
+        SaveManager.Instance.achieveData.totalKillCount++;
 
-        if(SaveManager.Instance.achiveData.totalKillCount >= 10)
+        if(SaveManager.Instance.achieveData.totalKillCount >= 10)
         {
-            if(SaveManager.Instance.achiveData.isCharacterUnlocked[2] == false)
+            if(SaveManager.Instance.achieveData.isCharacterUnlocked[2] == false)
             {
-                SaveManager.Instance.achiveData.isCharacterUnlocked[2] = true;
-                Debug.Log("3char achive");
+                SaveManager.Instance.achieveData.isCharacterUnlocked[2] = true;
 
                 SaveManager.Instance.SaveGame();
             }
