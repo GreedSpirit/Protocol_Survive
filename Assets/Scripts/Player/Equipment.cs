@@ -30,7 +30,7 @@ public class Equipment : MonoBehaviour
             switch (weapon.weaponIndex)
             {
                 case 0:
-                    weapon.speed = 100 + (100 * rate); //추후 베이스 데미지 변수를 만들어서 리팩토링
+                    weapon.speed = 100 + (100 * rate); //추후 베이스 변수를 만들어서 리팩토링
                     break;
                 case 1:
                     weapon.speed = 0.5f * (1f - rate);

@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     private static GameManager _instance;
-    public static GameManager Instance //기본적인 싱글톤 구조 (해당 프로젝트에서는 단일 장면으로 이루어지기에 필수적이지 않지만 연습을 위해 구현)
+    public static GameManager Instance //싱글톤 구조
     {
         get
         {
@@ -35,6 +35,9 @@ public class GameManager : MonoBehaviour
     public float maxGameTimer = 60f;
     public float curGameTimer = 0;
     public bool isLive;
+    [Header("UI")]
+    [SerializeField] private RectTransform _levelUpRectTransform;
+    [SerializeField] private GameObject _inGameUI;
 
     public event Action<int, int> OnExpChanged;
     public event Action<float> OnTimerChanged;
@@ -42,8 +45,6 @@ public class GameManager : MonoBehaviour
     public event Action<int, int> OnHealthChanged;
     public event Action OnLevelChanged;
     public event Action OnGameOverChanged;
-
-    [SerializeField] private RectTransform _levelUpRectTransform;
     private UpgradeItem[] _items;
 
     private void Awake()
@@ -71,6 +72,7 @@ public class GameManager : MonoBehaviour
 
     public void GameStart(int idx)
     {
+        _inGameUI.SetActive(true);
         characterSelectIndex = idx;
         playerHealth = playerMaxHealth;
         player.gameObject.SetActive(true);
@@ -120,6 +122,16 @@ public class GameManager : MonoBehaviour
 
     public void GameVictory()
     {
+        SaveManager.Instance.achiveData.isGameCleared = true;
+
+        if (SaveManager.Instance.achiveData.isCharacterUnlocked[3] == false)
+        {
+            SaveManager.Instance.achiveData.isCharacterUnlocked[3] = true;
+            Debug.Log("4char achive");
+
+            SaveManager.Instance.SaveGame();
+        }
+        
         StartCoroutine(GameVictoryCoroutine());
     }
 
@@ -172,6 +184,18 @@ public class GameManager : MonoBehaviour
     public void KillChanged()
     {
         killCount++;
+        SaveManager.Instance.achiveData.totalKillCount++;
+
+        if(SaveManager.Instance.achiveData.totalKillCount >= 10)
+        {
+            if(SaveManager.Instance.achiveData.isCharacterUnlocked[2] == false)
+            {
+                SaveManager.Instance.achiveData.isCharacterUnlocked[2] = true;
+                Debug.Log("3char achive");
+
+                SaveManager.Instance.SaveGame();
+            }
+        }
 
         OnKillCountChanged?.Invoke(killCount);
     }
