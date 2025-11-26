@@ -19,7 +19,7 @@ MonoBehaviour:
   desc: 'Base Damage + {0}%
 
     Previous Count + {1}'
-  baseDamage: 5
+  baseDamage: 4
   damages:
   - 0
   - 0.5

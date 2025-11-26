@@ -1,3 +1,5 @@
+using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -5,6 +7,7 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private float _baseMoveSpeed = 5f;
     [SerializeField] private float _moveSpeed = 5f;
+    [SerializeField] private float _damageCooldown = 0.5f;
     [SerializeField] private RuntimeAnimatorController[] _playerRuntimeAnimControllers;
     private Vector2 _moveInput;
     private Rigidbody2D _playerRigid;
@@ -12,6 +15,7 @@ public class Player : MonoBehaviour
     private Animator _playerAnimator;
     private UIController _uiController;
     private bool _isLive = true;
+    private float _lastDamageTime = 0f;
 
 
     void Awake()
@@ -54,26 +58,37 @@ public class Player : MonoBehaviour
         _moveSpeed = _baseMoveSpeed + _baseMoveSpeed * rate;
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    void OnCollisionStay2D(Collision2D collision)
     {
         if (!GameManager.Instance.isLive)
         {
             return;
         }
 
-        GameManager.Instance.playerHealth -= 10;
-        _uiController.HealthChanged();
-
-
-        if(GameManager.Instance.playerHealth < 0 && _isLive)
+        if (collision.gameObject.CompareTag("Enemy"))
         {
-            for(int idx = 2; idx < transform.childCount; idx++)
+            if(Time.time >= _lastDamageTime + _damageCooldown)
             {
-                transform.GetChild(idx).gameObject.SetActive(false);
-            }
+                GameManager.Instance.playerHealth -= collision.gameObject.GetComponent<Enemy>().damage;
+                _uiController.HealthChanged();
 
-            _playerAnimator.SetTrigger("Death");
-            GameManager.Instance.GameOver();
+                _lastDamageTime = Time.time;
+
+                if(GameManager.Instance.playerHealth < 0 && _isLive)
+                {
+                    for(int idx = 2; idx < transform.childCount; idx++)
+                    {
+                        transform.GetChild(idx).gameObject.SetActive(false);
+                    }
+
+                    _playerAnimator.SetTrigger("Death");
+                    GameManager.Instance.GameOver();
+                }
+                else
+                {
+                    StartCoroutine(DamageEffect());
+                }
+            }
         }
 
     }
@@ -81,5 +96,12 @@ public class Player : MonoBehaviour
     void OnEnable()
     {
         _playerAnimator.runtimeAnimatorController = _playerRuntimeAnimControllers[GameManager.Instance.characterSelectIndex];
+    }
+
+    IEnumerator DamageEffect()
+    {
+        GetComponent<SpriteRenderer>().color = Color.red;
+        yield return new WaitForSeconds(_damageCooldown);
+        GetComponent<SpriteRenderer>().color = Color.white;
     }
 }

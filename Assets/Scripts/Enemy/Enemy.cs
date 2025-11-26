@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private RuntimeAnimatorController[] _enemyRunTimeAnimator;
     [SerializeField] private Transform _targetTransform;
     [SerializeField] private bool _isLive;
+    public float damage;
 
     [Header("Controller")]
     [SerializeField] private UIController _uiController;
@@ -67,6 +68,7 @@ public class Enemy : MonoBehaviour
         _moveSpeed = data.moveSpeed;
         _maxHealth = data.health;
         _health = _maxHealth;
+        damage = data.damage;
     }
 
     void OnTriggerEnter2D(Collider2D collision)

@@ -1,5 +1,6 @@
 using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SaveManager : MonoBehaviour
 {
@@ -45,5 +46,6 @@ public class SaveManager : MonoBehaviour
     {
         achiveData = new AchiveData();
         SaveGame();
+        SceneManager.LoadScene(0);
     }
 }

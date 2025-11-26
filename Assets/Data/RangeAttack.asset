@@ -18,7 +18,7 @@ MonoBehaviour:
   itemName: Laser Gun
   desc: 'Base Damage + {0}%
 
-    Base Penetration + {1}'
+    Previous Penetration + {1}'
   baseDamage: 2
   damages:
   - 0

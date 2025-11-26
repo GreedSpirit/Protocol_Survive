@@ -19,8 +19,8 @@ public class GameManager : MonoBehaviour
     }
     [Header("About Player")]
     public Player player;
-    public int playerHealth;
-    public int playerMaxHealth = 100;
+    public float playerHealth;
+    public float playerMaxHealth = 100f;
     public int curLevel;
     public int curExp;
     public int killCount;
@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
     public event Action<int, int> OnExpChanged;
     public event Action<float> OnTimerChanged;
     public event Action<int> OnKillCountChanged;
-    public event Action<int, int> OnHealthChanged;
+    public event Action<float, float> OnHealthChanged;
     public event Action OnLevelChanged;
     public event Action OnGameOverChanged;
     private UpgradeItem[] _items;

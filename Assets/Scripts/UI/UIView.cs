@@ -47,9 +47,9 @@ public class UIView : MonoBehaviour
         _killText.text = "Kill : " + killCount;
     }
 
-    public void UpdateHealthUI(int curHealth, int maxHealth)
+    public void UpdateHealthUI(float curHealth, float maxHealth)
     {
-        _healthSlider.value = (float) curHealth / (float)maxHealth;
+        _healthSlider.value = curHealth / maxHealth;
     }
     public void UpdateLevelUpUI()
     {

@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
+    [SerializeField] private float _meleeBaseSpeed = 100f;
+    [SerializeField] private float _rangeBaseSpeed = 0.7f;
+
     public int weaponIndex; // 0 = Melee 1 = Range
     public int prefabIndex; // Spawner의 인스펙터에 할당된 프리팹 인덱스
     public float speed; // 근접은 회전 속도, 원거리는 연사 속도
@@ -73,7 +76,7 @@ public class Weapon : MonoBehaviour
                 PlaceMeleeAttack();
                 break;
             case 1:
-                speed = 0.3f;
+                speed = _rangeBaseSpeed;
                 break;
             default:
                 break;
@@ -86,7 +89,7 @@ public class Weapon : MonoBehaviour
     {
         for(int i = 0; i < count; i++)
         {
-            speed = 100;
+            speed = _meleeBaseSpeed;
 
             Transform meleeAttack;
             if(i < transform.childCount) // pool에 이미 생성된 무기 재사용
@@ -138,5 +141,18 @@ public class Weapon : MonoBehaviour
         rangeAttack.position = transform.position;
         rangeAttack.rotation = Quaternion.FromToRotation(Vector3.up, dir);
         rangeAttack.GetComponent<Attack>().Init(damage, count, dir);
+    }
+
+    public void SpeedIncrease(float rate)
+    {
+        switch (weaponIndex)
+        {
+            case 0:
+                speed = _meleeBaseSpeed + (_meleeBaseSpeed * rate);
+                break;
+            case 1:
+                speed = _rangeBaseSpeed / (1f + rate);
+                break;
+        }
     }
 }
